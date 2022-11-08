@@ -45,3 +45,16 @@ Branches:
             *4> npm start 
                 // simply npm start will run the server
 
+//code has been added after using morgan
+*3> Morgan: branch --> morgan setup
+    *1> Morgan is HTTP request logger middleware for node.js
+        we have to tell express to funnel all the request through the morgan middleware
+        then, morgan will log something and then let the request continue
+    *2> Morgan behind the scenes will call 'next' function i.e (req,res,next) saying I don't return a response 
+        but I made a log where you can continue doing your work.
+    *3> HTTP logger can be used for handling errors
+    *4> npm install --save morgan
+    *5> open app.js:
+        //use morgan
+        const morgan = require('morgan');
+        app.use(morgan('dev'));

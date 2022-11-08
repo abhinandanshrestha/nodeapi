@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+// now , we have to basically tell express to funnel all the request through the morgan middleware
+// morgan will log something and then let the request continue
+
 /* 
 orders/
 get post 
