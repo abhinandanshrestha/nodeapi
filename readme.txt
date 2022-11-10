@@ -65,3 +65,20 @@ Branches:
     *3> doesn't support files but does support
     *4> but supports URL encoded bodies & JSON data
     
+*5> CORS handling 
+    Note: 
+	*1> By default the only allowed url is the same origin you come from.
+	*2> If we have to make requests from different origins, we need to specify origin that are allowed.
+	*3> Also by default, allowed methods are all & any like GET, POST, PUT, etc.
+    *4> But we can specific OPTIONS method to only allow GET & POST.
+
+*6> Database -> branch mongodb mongoose
+    Mongodb: Database -> www.mongodb.com
+    Mongoose: package to work with the database
+
+    npm install --save mongoose
+
+    const mongoose = require('mongoose');
+
+    //mongoose.connect('<tyo chai site ma hunxa connect your application ma>')
+    mongoose.connect('mongodb+srv://abhinandanshrestha:<password>@noderest.sdv5uqn.mongodb.net/?retryWrites=true&w=majority')

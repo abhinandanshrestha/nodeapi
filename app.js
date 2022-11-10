@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb+srv://abhinandanshrestha:abhi@noderest.sdv5uqn.mongodb.net/?retryWrites=true&w=majority')
+
 //using data-parser to parse the incoming requests
 const bodyParser = require('body-parser');
 // app.use(bodyParser.urlencoded({
@@ -24,6 +28,7 @@ app.use((req,res,next) => {
 
     next();
 })
+
 
 
 
