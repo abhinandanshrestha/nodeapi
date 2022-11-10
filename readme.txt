@@ -58,3 +58,10 @@ Branches:
         //use morgan
         const morgan = require('morgan');
         app.use(morgan('dev'));
+
+*4> body-parser: branch -->bodyparser
+    *1> parse the body of incoming request because by default it's not nicely formatted and readable.
+    *2> npm install --save body-parser
+    *3> doesn't support files but does support
+    *4> but supports URL encoded bodies & JSON data
+    

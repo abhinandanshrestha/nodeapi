@@ -1,4 +1,5 @@
 const express = require('express');
+// const app = express();
 const router = express.Router();
 
 /*
@@ -12,9 +13,17 @@ router.get('/',(req,res,next)=>{
     })
 })
 
-router.post('/',(req,res,next)=>{
+router.post('/',(req,res)=>{
+    const product = {
+        name: req.body.name,
+        price: req.body.price
+    }
+
+    res.send(product)
+
     res.status(201).json({
-        message: 'Handling POST requests to /products'
+        message: 'Handling POST requests to /products',
+        createdProduct: product
     })
 })
 

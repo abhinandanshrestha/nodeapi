@@ -15,9 +15,16 @@ router.get('/',(req,res,next)=>{
 })
 
 router.post('/',(req,res,next)=>{
+
+    const order = {
+        productId: req.body.name,
+        quantity: req.body.quantity
+    }
+
     // The HTTP 201 Created success status response code indicates that the request has succeeded and has led to the creation of a resource
     res.status(201).json({
-        message: 'orders were created'
+        message: 'orders were created',
+        order: order
     });
 });
 
