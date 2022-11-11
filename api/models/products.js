@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 //Everything in Mongoose starts with a Schema. Each schema maps to a MongoDB collection and defines the shape of the documents within that collection.
 const productSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    name: String,
-    price: Number
+    name: { type: String, required: true },
+    price: { type: Number, required: true }
 })
 
 //name of the model and Schema you want to use for the model

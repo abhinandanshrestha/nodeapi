@@ -82,3 +82,6 @@ Branches:
 
     //mongoose.connect('<tyo chai site ma hunxa connect your application ma>')
     mongoose.connect('mongodb+srv://abhinandanshrestha:<password>@noderest.sdv5uqn.mongodb.net/?retryWrites=true&w=majority')
+
+    mongoose1 --> basic get handling
+    mongoose2 --> Mongoose handling
