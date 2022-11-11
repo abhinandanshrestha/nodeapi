@@ -90,16 +90,13 @@ router.get('/:productId',(req,res,next)=>{
 
 router.patch('/:productId',(req,res,next)=>{
     const id = req.params.productId;
-    const updateOp = {};
-    for (const ops of req.body){
-        updateOp[ops.propName]=ops.value;
-    }
+    const updateOp = req.body;
     Product.update({_id: id},{$set:updateOp}).exec().then(result=>{
         console.log(result);
-        res.send(200).json(result);
+        res.status(200).json(result);
     }).catch(err=>{
         console.log(err);
-        res.send(500).json({
+        res.status(500).json({
             error: err
         })
     }); //The $set operator replaces the value of a field with the specified value.
