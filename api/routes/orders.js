@@ -1,5 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+
+//import Order model from the models/orders.js
+const Order = require('../models/orders')
+const Product = require('../models/products')
+
 
 // now , we have to basically tell express to funnel all the request through the morgan middleware
 // morgan will log something and then let the request continue
@@ -9,24 +15,54 @@ orders/
 get post 
 */
 router.get('/',(req,res,next)=>{
-    res.status(200).json({
-        message: 'orders were fetched'
-    })
+    Order.find().exec()
+        .then(docs=>{
+            res.status(200).json(docs)
+        })
+        .catch(err=>{
+            res.status(500).json({
+                error:err
+            })
+        })
 })
 
 router.post('/',(req,res,next)=>{
 
-    const order = {
-        productId: req.body.name,
-        quantity: req.body.quantity
-    }
+    // const order = {
+    // productId: req.body.name,
+    // quantity: req.body.quantity
 
-    // The HTTP 201 Created success status response code indicates that the request has succeeded and has led to the creation of a resource
-    res.status(201).json({
-        message: 'orders were created',
-        order: order
+    //check if the product exist or not then perform the post request
+    Product.findById(req.body.productId).then(product=>{
+
+        if (!product){
+            return res.status(404).json({
+                message: "Product not found"
+            })
+        }
+        const order = new Order({
+            _id: mongoose.Types.ObjectId(),
+            quantity: req.body.quantity,
+            product: req.body.productId
+        });
+
+        order.save().then(result=>{
+                console.log(result);
+                res.status(201).json(result);
+            }).catch(err=>{
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
+    })
+        .catch(err=>{
+            res.status(500).json({
+                error: err
+            })
+        });
+
     });
-});
 
 
 /*
@@ -34,17 +70,39 @@ router.post('/',(req,res,next)=>{
 get delete
 */
 router.get('/:orderId',(req,res,next)=>{
-    res.status(200).json({
-        message: 'Order Details',
-        orderId: req.params.orderId
-    });
+    Order.findById(req.params.orderId).exec()
+        .then(order=>{
+            if(!order){
+                return res.status(404).json({
+                    message: "Order not found"
+                })
+            }
+            res.status(200).json(
+                {order: order}
+            ).catch(err=>{
+                console.log(err);
+                res.status(500).json({
+                    error: err
+                })
+            })
+        })
 });
 
 router.delete('/:orderId',(req,res,next)=>{
-    res.status(200).json({
-        message: 'Order Deleted',
-        orderId: req.params.orderId
-    });
+    Order.remove({ _id: req.params.orderId }).exec()
+        .then(result=>{
+            res.status(200).json({
+                message: 'Order deleted',
+                request:{
+                    type: 'DELETE'
+                }
+            })
+        }).catch(err=>{
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
 });
 
 
