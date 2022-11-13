@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 /*
 /products
 GET post
@@ -28,16 +27,44 @@ router.get('/',(req,res,next)=>{
 const mongoose = require('mongoose')
 const Product =  require('../models/products')
 
-router.post('/',(req,res)=>{
-    // const product = {
-    //     name: req.body.name,
-    //     price: req.body.price
-    // }
+//Alternative approach to body parser is to use multer for file uploading
+const multer = require('multer');
+
+const storage= multer.diskStorage({
+    destination: function(req,file,cb){
+        //cb(error,destination)
+        cb(null,'./uploads/');
+    },
+    filename: function(req,file,cb){
+        //cb(error,filename)
+        cb(null,file.originalname)
+    }
+})
+
+const upload = multer({
+    storage:storage,
+    limits: 1024*1024*5, //5MB limits at max
+    fileFilter: function(req,file,cb){
+        if (file.mimetype==='image/jpeg' || file.mimetype==='image/png'){
+            cb(null,true);
+        }else{
+            cb(null,false);
+        }
+    }
+})
+
+router.post('/',upload.single('productImage'),(req,res,next)=>{
+
+    // req.file is the `productImage` file
+    // req.body will hold the text fields, if there were any
+
+    console.log(req.file)
 
     const product = new Product({
         _id: mongoose.Types.ObjectId(),
         name: req.body.name,
-        price: req.body.price
+        price: req.body.price,
+        productImage: req.file.path
     });
 
     //now we can save it to the database

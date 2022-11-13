@@ -86,3 +86,15 @@ Branches:
     mongoose1 --> basic get handling for Product
     mongoose2 --> Mongoose handling Orders
     mongoose3 --> Populating Queries with Mongoose
+
+*7> Uploading files/images:
+    branch --> images
+
+    Approach A:
+        --> make separate endpoint where we accept binary data only
+    Approach B:
+        --> Easier Approach
+        --> or instead of using body parser, we accept form data that can include names, price and images all together
+        --> npm install --save multer
+
+    

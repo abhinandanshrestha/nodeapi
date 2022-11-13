@@ -44,6 +44,7 @@ app.use('/orders',orderRoutes);
 const morgan = require('morgan');
 app.use(morgan('dev'));
 
+app.use('/uploads/',express.static('uploads'));
 
 
 
