@@ -97,4 +97,36 @@ Branches:
         --> or instead of using body parser, we accept form data that can include names, price and images all together
         --> npm install --save multer
 
-    
+        const multer  = require('multer')
+        const upload = multer({ dest: 'uploads/' })
+
+        app.post('/profile', upload.single('productImage'), function (req, res, next) {
+
+            console.log(req.file)
+            // req.file is the `productImage` file
+            // req.body will hold the text fields, if there were any
+
+
+            const product = new Product({
+            _id: mongoose.Types.ObjectId(),
+            name: req.body.name,
+            price: req.body.price,
+            productImage: req.file.path
+            });
+
+            //now we can save it to the database
+            product.save().then((result) =>{
+                console.log(result);
+                res.status(201).json({
+                    message: 'Handling POST requests to /products',
+                    createdProduct: result
+                })
+            }).catch((err)=>{
+                console.log(err);
+                res.status(500).json({
+                    error:err
+                }); // 500 error represents server encountered an unexpected condition that prevented it from fulfilling the request. 
+            });
+        })
+
+
