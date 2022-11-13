@@ -85,3 +85,4 @@ Branches:
 
     mongoose1 --> basic get handling for Product
     mongoose2 --> Mongoose handling Orders
+    mongoose3 --> Populating Queries with Mongoose

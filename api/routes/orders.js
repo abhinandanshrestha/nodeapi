@@ -15,7 +15,9 @@ orders/
 get post 
 */
 router.get('/',(req,res,next)=>{
-    Order.find().exec()
+    Order.find()
+        .populate('product') //populate can be used to display all information related to orders as we have productId as foreign key to orderSchema
+        .exec()
         .then(docs=>{
             res.status(200).json(docs)
         })
@@ -70,7 +72,9 @@ router.post('/',(req,res,next)=>{
 get delete
 */
 router.get('/:orderId',(req,res,next)=>{
-    Order.findById(req.params.orderId).exec()
+    Order.findById(req.params.orderId)
+        .populate('product')
+        .exec()
         .then(order=>{
             if(!order){
                 return res.status(404).json({
